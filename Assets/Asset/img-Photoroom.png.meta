@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1a4e95429e9a40b4496ac36f71045693
+guid: 2e373fc426db9b74db9671e04629d57e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -7,7 +7,7 @@ TextureImporter:
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
-    sRGBTexture: 0
+    sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 779404 2-01_0
+      name: img-Photoroom_0
       rect:
         serializedVersion: 2
-        x: 1182
-        y: 1177
-        width: 338
-        height: 313
+        x: 103
+        y: 904
+        width: 261
+        height: 225
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f87892a355d0a64419cfeca62561dc8c
-      internalID: -442487279
+      spriteID: 43d64c5865e3fe944a238ccca35ef9a7
+      internalID: -2024303572
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: img_0
+      name: img-Photoroom_1
       rect:
         serializedVersion: 2
-        x: 139
-        y: 691
-        width: 332
-        height: 332
+        x: 106
+        y: 533
+        width: 255
+        height: 254
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 780392d879503104cb52b8f8365bdf13
+      internalID: 1104664835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: img-Photoroom_2
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 106
+        width: 285
+        height: 289
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,8 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a121a7a6d628184da0d291e14da7d46
-      internalID: -714755983
+      spriteID: d570a24ea45421147a514d25e0e80deb
+      internalID: -1430133954
       vertices: []
       indices: 
       edges: []
@@ -162,8 +183,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      779404 2-01_0: -442487279
-      img_0: -714755983
+      img-Photoroom_0: -2024303572
+      img-Photoroom_1: 1104664835
+      img-Photoroom_2: -1430133954
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
