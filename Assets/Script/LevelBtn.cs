@@ -6,12 +6,22 @@ using UnityEngine.UI;
 public class LevelBtn : MonoBehaviour
 {
     public int Level;
+    public int Star;
+    public Sprite SpriteNull;
+    public Sprite SpriteOn;
+    public Image Star1;
+    public Image Star2;
+    public Image Star3;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
         CheckLevelUnlock();
         ObserverManager.AddListener("Level Complete", CheckLevelUnlock);
+
+
 
 
 
@@ -32,18 +42,55 @@ public class LevelBtn : MonoBehaviour
 
 
 
+
     }
     public void CheckLevelUnlock()
     {
-        // if (LevelManager.Instance.LevelUnlock.Contains(Level) == false)
-        // {
-        //     gameObject.GetComponent<Button>().interactable = false;
+        if (LevelManager.Instance.LevelUnlock.ListLevelUnlock.Contains(Level) == false)
+        {
+            gameObject.GetComponent<Button>().interactable = false;
 
-        // }
-        // else
-        // {
-        //     gameObject.GetComponent<Button>().interactable = true;
+        }
+        else
+        {
+            gameObject.GetComponent<Button>().interactable = true;
+            Star = LevelManager.Instance.ListLevel.Find(x => x.Index == Level).Star;
+            UpdateStarAchievement();
 
-        // }
+
+        }
     }
+    public void UpdateStarAchievement()
+    {
+        if (Star == 3)
+        {
+            Star1.sprite = SpriteOn;
+            Star2.sprite = SpriteOn;
+            Star3.sprite = SpriteOn;
+
+        }
+        else if (Star == 2)
+        {
+            Star1.sprite = SpriteOn;
+            Star2.sprite = SpriteOn;
+            Star3.sprite = SpriteNull;
+        }
+        else if (Star == 1)
+        {
+            Star1.sprite = SpriteOn;
+            Star2.sprite = SpriteNull;
+            Star3.sprite = SpriteNull;
+        }
+        else if (Star == 0)
+        {
+            Star1.sprite = SpriteNull;
+            Star2.sprite = SpriteNull;
+            Star3.sprite = SpriteNull;
+        }
+
+
+
+    }
+
+
 }

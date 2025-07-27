@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class DrawLineController : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class DrawLineController : MonoBehaviour
     public bool isFirstLine = false;
     public bool isInLevel = false;
     public List<GameObject> ListLine;
+    public GameObject Pen;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -29,29 +32,37 @@ public class DrawLineController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && isInLevel == true)
+        if (EventSystem.current.IsPointerOverGameObject())
         {
-            CurrentLine = Instantiate(LinePrefab);
-            ListLine.Add(CurrentLine);
-
-
+            return;
         }
-
-        if (Input.GetMouseButtonUp(0) && isInLevel == true)
+        else
         {
-            if (isFirstLine == false)
+            if (Input.GetMouseButtonDown(0) && isInLevel == true)
             {
-                isFirstLine = true;
-                ObserverManager.Notify("OpenSquare");
+                CurrentLine = Instantiate(LinePrefab);
+                ListLine.Add(CurrentLine);
+
 
             }
+
+            if (Input.GetMouseButtonUp(0) && isInLevel == true)
+            {
+                if (isFirstLine == false)
+                {
+                    isFirstLine = true;
+                    ObserverManager.Notify("OpenSquare");
+
+                }
+            }
         }
+
 
 
     }
     public void ResetVariable()
     {
-        isInLevel = false;
+        isInLevel = true;
         isFirstLine = false;
         for (int i = 0; i < ListLine.Count; i++)
         {

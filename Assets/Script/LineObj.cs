@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class LineObj : MonoBehaviour
     public EdgeCollider2D EdgeCollider2D;
     public List<Vector3> LinePositions;
     public List<Vector3> localPoints = new List<Vector3>();
+    private GameObject Pen;
 
 
     private void Start()
@@ -22,11 +24,15 @@ public class LineObj : MonoBehaviour
         CurrentPosition = transform.position;
         LineRenderer.positionCount = 1;
         gameObject.GetComponent<Rigidbody2D>().simulated = false;
+        Pen = DrawLineController.Instance.Pen;
+
+
     }
     private void Update()
     {
         if (Input.GetMouseButton(0) && isComplete == false)
         {
+            Pen.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
             Vector3 _tempPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             _tempPosition.z = 0;
             if (Vector3.Distance(CurrentPosition, _tempPosition) > MinDistance)
@@ -35,7 +41,10 @@ public class LineObj : MonoBehaviour
                 {
                     LineRenderer.SetPosition(0, _tempPosition);
                     LinePositions.Add(_tempPosition);
+                    LevelManager.Instance.DecreaseSlideStarValue();
                     AddPoint(_tempPosition);
+                    Pen.transform.position = _tempPosition;
+
 
 
 
@@ -46,7 +55,10 @@ public class LineObj : MonoBehaviour
                     LineRenderer.positionCount++;
                     LineRenderer.SetPosition(LineRenderer.positionCount - 1, _tempPosition);
                     LinePositions.Add(_tempPosition);
+                    LevelManager.Instance.DecreaseSlideStarValue();
                     AddPoint(_tempPosition);
+                    Pen.transform.position = _tempPosition;
+
 
 
                 }
@@ -59,6 +71,7 @@ public class LineObj : MonoBehaviour
         {
 
             gameObject.GetComponent<Rigidbody2D>().simulated = true;
+            Pen.GetComponent<SpriteRenderer>().DOFade(0f, 1f);
 
             isComplete = true;
 

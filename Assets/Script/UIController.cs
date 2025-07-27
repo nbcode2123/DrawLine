@@ -13,6 +13,12 @@ public class UIController : MonoBehaviour
     public GameObject QuitBtn;
     public GameObject LevelCanvas;
     public TextMeshProUGUI LevelText;
+    public GameObject CompleteLevelCanvas;
+    public GameObject Star1;
+    public GameObject Star2;
+    public GameObject Star3;
+
+
     private void Awake()
     {
         if (Instance != this && Instance != null)
@@ -29,9 +35,11 @@ public class UIController : MonoBehaviour
         ObserverManager.AddListener("ChangeToLevelScene", TurnOffMenuCanvas);
         ObserverManager.AddListener("ChangeToLevelScene", TurnOnLevelCanvas);
         TurnOffLevelCanvas();
+        TurnOffCompleteLevelCanvas();
 
 
     }
+
     public void Play()
     {
         ObserverManager.Notify("PlayBtn");
@@ -59,6 +67,16 @@ public class UIController : MonoBehaviour
         LevelCanvas.SetActive(false);
 
     }
+    public void TurnOnCompleteLevelCanvas()
+    {
+        CompleteLevelCanvas.SetActive(true);
+
+    }
+    public void TurnOffCompleteLevelCanvas()
+    {
+        CompleteLevelCanvas.SetActive(false);
+
+    }
     public void BackToMenuInLevel()
     {
         SceneController.Instance.ChangeToMenuScene();
@@ -66,12 +84,52 @@ public class UIController : MonoBehaviour
     public void ResetLevel()
     {
         SceneController.Instance.ResetLevel();
+        Star3.GetComponent<StarLevel>().OnSprite();
+
+        Star2.GetComponent<StarLevel>().OnSprite();
+
+
+        Star1.GetComponent<StarLevel>().OnSprite();
+        TurnOnLevelCanvas();
+
     }
     public void UpdateLevelText(int level)
     {
         LevelText.text = $"LEVEL.{level}";
 
     }
+    public void UpdateStarUI(int star)
+    {
+        if (star == 2)
+        {
+            Star3.GetComponent<StarLevel>().OffSprite();
+
+        }
+        else if (star == 1)
+        {
+            Star2.GetComponent<StarLevel>().OffSprite();
+
+        }
+        else if (star == 0)
+        {
+            Star1.GetComponent<StarLevel>().OffSprite();
+
+        }
+
+    }
+    public void ResetCompleteCanvas()
+    {
+        CompleteLevelCanvas.GetComponent<CompleteCanvasStarEffect>().Reset();
+
+    }
+    public void PlayNextLevel()
+    {
+        SceneController.Instance.ChangeToNextLevel();
+    }
+
+
+
+
 
 
 }
