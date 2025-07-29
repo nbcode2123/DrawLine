@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2511502986851820606}
   - component: {fileID: 5296952953594731015}
   - component: {fileID: 7052709131169405632}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ball
   m_TagString: Ball
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 2
   m_SpriteSortPoint: 0
 --- !u!58 &5296952953594731015
 CircleCollider2D:

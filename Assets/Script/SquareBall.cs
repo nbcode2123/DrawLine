@@ -8,7 +8,7 @@ public class SquareBall : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ObserverManager.AddListener("OpenSquare", TurnOffBottom);
+        ObserverManager.AddListener("OpenSlotMachine", TurnOffBottom);
     }
     public void TurnOffBottom()
     {
@@ -17,13 +17,13 @@ public class SquareBall : MonoBehaviour
     }
     private void OnDestroy()
     {
-        ObserverManager.RemoveListener("OpenSquare", TurnOffBottom);
+        ObserverManager.RemoveListener("OpenSlotMachine", TurnOffBottom);
 
     }
     private void OnDisable()
 
     {
-        ObserverManager.RemoveListener("OpenSquare", TurnOffBottom);
+        ObserverManager.RemoveListener("OpenSlotMachine", TurnOffBottom);
 
     }
 

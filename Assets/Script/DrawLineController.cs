@@ -25,7 +25,6 @@ public class DrawLineController : MonoBehaviour
     }
     private void Start()
     {
-        // ObserverManager.AddListener("Level Complete", LevelCompleteAction);
 
     }
 
@@ -51,7 +50,7 @@ public class DrawLineController : MonoBehaviour
                 if (isFirstLine == false)
                 {
                     isFirstLine = true;
-                    ObserverManager.Notify("OpenSquare");
+                    ObserverManager.Notify("OpenSlotMachine");
 
                 }
             }
@@ -60,18 +59,37 @@ public class DrawLineController : MonoBehaviour
 
 
     }
-    public void ResetVariable()
+    public void ClearLine()
     {
-        isInLevel = true;
-        isFirstLine = false;
         for (int i = 0; i < ListLine.Count; i++)
         {
             Destroy(ListLine[i]);
         }
         ListLine.Clear();
-
     }
 
+    // public void ResetVariableOutLevel()
+    // {
+    //     isInLevel = false;
+    //     isFirstLine = false;
+    //     for (int i = 0; i < ListLine.Count; i++)
+    //     {
+    //         Destroy(ListLine[i]);
+    //     }
+    //     ListLine.Clear();
+
+    // }
+    // public void ResetVariableInLevel()
+    // {
+    //     isInLevel = true;
+    //     isFirstLine = false;
+    //     for (int i = 0; i < ListLine.Count; i++)
+    //     {
+    //         Destroy(ListLine[i]);
+    //     }
+    //     ListLine.Clear();
+
+    // }
 
 
 }

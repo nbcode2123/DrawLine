@@ -86,8 +86,14 @@ public class SceneController : MonoBehaviour
         {
             LevelManager.Instance.RunLevel(level);
             UIController.Instance.UpdateLevelText(level);
-            DrawLineController.Instance.isFirstLine = false;
             DrawLineController.Instance.isInLevel = true;
+            DrawLineController.Instance.isFirstLine = false;
+            DrawLineController.Instance.ClearLine();
+            UIController.Instance.TurnOffEndCanvas();
+
+
+
+
 
 
 
@@ -118,8 +124,10 @@ public class SceneController : MonoBehaviour
             UIController.Instance.TurnOnMenuCanvas();
             UIController.Instance.TurnOffLevelCanvas();
             UIController.Instance.TurnOffCompleteLevelCanvas();
-            DrawLineController.Instance.ResetVariable();
-
+            UIController.Instance.TurnOffEndCanvas();
+            DrawLineController.Instance.isInLevel = false;
+            DrawLineController.Instance.isFirstLine = false;
+            DrawLineController.Instance.ClearLine();
 
 
         }));
@@ -148,7 +156,10 @@ public class SceneController : MonoBehaviour
             LevelManager.Instance.ResetVariable();
             UIController.Instance.TurnOffLevelCanvas();
             UIController.Instance.TurnOnCompleteLevelCanvas();
-            DrawLineController.Instance.ResetVariable();
+            UIController.Instance.TurnOffEndCanvas();
+            DrawLineController.Instance.isInLevel = false;
+            DrawLineController.Instance.isFirstLine = false;
+            DrawLineController.Instance.ClearLine();
 
 
 
@@ -176,8 +187,12 @@ public class SceneController : MonoBehaviour
         }, 1f, 0.5f).SetEase(Ease.Linear).OnComplete(() =>
         {
             LevelManager.Instance.ResetLevel();
-            DrawLineController.Instance.ResetVariable();
+            DrawLineController.Instance.isInLevel = true;
+            DrawLineController.Instance.isFirstLine = false;
+            DrawLineController.Instance.ClearLine();
             UIController.Instance.TurnOffCompleteLevelCanvas();
+            UIController.Instance.TurnOffEndCanvas();
+
 
 
 
@@ -204,9 +219,11 @@ public class SceneController : MonoBehaviour
         }, 1f, 0.5f).SetEase(Ease.Linear).OnComplete(() =>
         {
             LevelManager.Instance.ResetLevel();
-            DrawLineController.Instance.ResetVariable();
-            UIController.Instance.TurnOffCompleteLevelCanvas();
+            DrawLineController.Instance.isInLevel = true;
+            DrawLineController.Instance.isFirstLine = false;
+            DrawLineController.Instance.ClearLine();
             LevelManager.Instance.NextLevel();
+
 
 
 

@@ -160,7 +160,7 @@ TextureImporter:
         width: 285
         height: 289
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -168,6 +168,27 @@ TextureImporter:
       bones: []
       spriteID: d570a24ea45421147a514d25e0e80deb
       internalID: -1430133954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: img-Photoroom_3
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 1115
+        width: 256
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 174b41a1fb15a2c45a7bcce816e3b305
+      internalID: -1906107438
       vertices: []
       indices: 
       edges: []
@@ -186,6 +207,7 @@ TextureImporter:
       img-Photoroom_0: -2024303572
       img-Photoroom_1: 1104664835
       img-Photoroom_2: -1430133954
+      img-Photoroom_3: -1906107438
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

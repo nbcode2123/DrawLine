@@ -22,6 +22,7 @@ public class CompleteCanvasStarEffect : MonoBehaviour
     }
     private void OnEnable()
     {
+
         Star1.rectTransform.localScale = new Vector3(4, 4, 1);
         Star2.rectTransform.localScale = new Vector3(4, 4, 1);
         Star3.rectTransform.localScale = new Vector3(4, 4, 1);
@@ -44,6 +45,7 @@ public class CompleteCanvasStarEffect : MonoBehaviour
             {
                 OneStarAnimation();
             }
+            ObserverManager.Notify("PlayAudio", "CompleteCanvas");
 
 
 

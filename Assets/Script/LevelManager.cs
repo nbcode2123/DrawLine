@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,35 +43,51 @@ public class LevelManager : MonoBehaviour
         CurrentLevelIndex = level;
         ObserverManager.Notify("ChangeToLevelScene");
         Level _tempLevel = ListLevel.Find(x => x.Index == level);
-        CurrentLevel = _tempLevel;
-        CurrentLevelObj = Instantiate(_tempLevel.Prefab);
-        DrawLineController.Instance.isInLevel = true;
-        StarCurrentLevel = 0;
+        if (_tempLevel == null || _tempLevel.Prefab == null)
+        {
+            UIController.Instance.TurnOnEndCanvas();
+        }
+        else
+        {
+            CurrentLevel = _tempLevel;
+            CurrentLevelObj = Instantiate(_tempLevel.Prefab);
+            StarCurrentLevel = 0;
+        }
+
     }
     public void BallCounterIncrease()
     {
         BallCounter++;
         if (BallCounter == BallCounterComplete)
         {
-            DrawLineController.Instance.isInLevel = false;
             BallCounter = 0;
+            ;
+
             if (LevelUnlock.ListLevelUnlock.Contains(CurrentLevelIndex + 1) == false)
             {
                 LevelUnlock.ListLevelUnlock.Add(CurrentLevelIndex + 1);
 
             }
-            if (CurrentLevel.Star < StarCurrentLevel)
+
+            Data data = DataSystem.LoadData();
+            if (data.ListLevelPlayerPref.Find(x => x.Index == CurrentLevelIndex) == null || data == null)
             {
-                CurrentLevel.Star = StarCurrentLevel;
+                data.ListLevelPlayerPref.Add(new LevelPlayerPref { Index = CurrentLevelIndex, Star = StarCurrentLevel });
+                DataSystem.SaveData(data);
+
             }
 
+
+
             ObserverManager.Notify("Level Complete");
+            ObserverManager.Notify("PlayAudio", "LevelComplete");
             Debug.Log("Game Complete");
         }
     }
     public void BackToMenu()
     {
         Destroy(CurrentLevelObj);
+
 
     }
     public void DecreaseSlideStarValue()
@@ -119,10 +136,20 @@ public class LevelManager : MonoBehaviour
     {
         Destroy(CurrentLevelObj);
         Level _tempLevel = ListLevel.Find(x => x.Index == CurrentLevelIndex + 1);
-        CurrentLevelObj = Instantiate(_tempLevel.Prefab);
-        CurrentLevelIndex = _tempLevel.Index;
-        SliderStar.value = SliderStar.maxValue;
-        BallCounter = 0;
+        if (_tempLevel == null)
+        {
+            Debug.Log("level null");
+            UIController.Instance.TurnOnEndCanvas();
+            UIController.Instance.TurnOffLevelCanvas();
+        }
+        else
+        {
+            CurrentLevelObj = Instantiate(_tempLevel.Prefab);
+            CurrentLevelIndex = _tempLevel.Index;
+            SliderStar.value = SliderStar.maxValue;
+            BallCounter = 0;
+        }
+
 
 
 
@@ -136,4 +163,67 @@ public class LevelManager : MonoBehaviour
 
 
     }
+    public void TurnOnHintLevel()
+    {
+        CurrentLevelObj.GetComponent<LevelPrefab>().TurnOnHint();
+    }
+
+
 }
+[Serializable]
+public class LevelPlayerPref
+{
+    public int Index;
+    public int Star;
+}
+[Serializable]
+public class Data
+{
+    public List<LevelPlayerPref> ListLevelPlayerPref;
+    public Data()
+    {
+        ListLevelPlayerPref = new List<LevelPlayerPref>();
+        ListLevelPlayerPref.Add(new LevelPlayerPref()
+        {
+            Index = 0,
+            Star = 0,
+        });
+    }
+
+}
+public static class DataSystem
+{
+    public static void SaveData(Data data)
+    {
+        string json = JsonUtility.ToJson(data);
+        PlayerPrefs.SetString("DataLevel", json);
+        PlayerPrefs.Save();
+
+    }
+    public static Data LoadData()
+    {
+        string json = PlayerPrefs.GetString("DataLevel");
+        Data data;
+        if (string.IsNullOrEmpty(json))
+        {
+            return new Data();
+        }
+        else
+        {
+            data = JsonUtility.FromJson<Data>(json);
+            if (data.ListLevelPlayerPref == null || data.ListLevelPlayerPref.Count == 0)
+            {
+                data.ListLevelPlayerPref = new List<LevelPlayerPref>();
+                data.ListLevelPlayerPref.Add(new LevelPlayerPref()
+                {
+                    Index = 0,
+                    Star = 0,
+                });
+            }
+
+        }
+        return data;
+
+    }
+}
+

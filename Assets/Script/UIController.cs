@@ -17,6 +17,8 @@ public class UIController : MonoBehaviour
     public GameObject Star1;
     public GameObject Star2;
     public GameObject Star3;
+    public GameObject HintBtn;
+    public GameObject EndCanvas;
 
 
     private void Awake()
@@ -36,6 +38,7 @@ public class UIController : MonoBehaviour
         ObserverManager.AddListener("ChangeToLevelScene", TurnOnLevelCanvas);
         TurnOffLevelCanvas();
         TurnOffCompleteLevelCanvas();
+        TurnOffEndCanvas();
 
 
     }
@@ -43,15 +46,22 @@ public class UIController : MonoBehaviour
     public void Play()
     {
         ObserverManager.Notify("PlayBtn");
+        ObserverManager.Notify("PlayAudio", "ButtonSound");
+
+
     }
     public void BackToMenuInLevelMenu()
     {
         ObserverManager.Notify("BackToMenuLevel");
+        ObserverManager.Notify("PlayAudio", "ButtonSound");
+
+
     }
     public void TurnOffMenuCanvas()
     {
 
         MenuCanvas.SetActive(false);
+
     }
     public void TurnOnMenuCanvas()
     {
@@ -80,6 +90,8 @@ public class UIController : MonoBehaviour
     public void BackToMenuInLevel()
     {
         SceneController.Instance.ChangeToMenuScene();
+        ObserverManager.Notify("PlayAudio", "ButtonSound");
+
     }
     public void ResetLevel()
     {
@@ -88,9 +100,15 @@ public class UIController : MonoBehaviour
 
         Star2.GetComponent<StarLevel>().OnSprite();
 
-
         Star1.GetComponent<StarLevel>().OnSprite();
         TurnOnLevelCanvas();
+        DrawLineController.Instance.isInLevel = true;
+        DrawLineController.Instance.isFirstLine = false;
+        DrawLineController.Instance.ClearLine();
+        ObserverManager.Notify("PlayAudio", "ButtonSound");
+
+
+
 
     }
     public void UpdateLevelText(int level)
@@ -121,10 +139,32 @@ public class UIController : MonoBehaviour
     {
         CompleteLevelCanvas.GetComponent<CompleteCanvasStarEffect>().Reset();
 
+
+
     }
     public void PlayNextLevel()
     {
         SceneController.Instance.ChangeToNextLevel();
+        LevelCanvas.SetActive(true);
+        TurnOffCompleteLevelCanvas();
+        // ObserverManager.Notify("PlayAudio", "ButtonSound");
+
+    }
+    public void TurnOnHint()
+    {
+        LevelManager.Instance.TurnOnHintLevel();
+        ObserverManager.Notify("PlayAudio", "ButtonSound");
+
+    }
+    public void TurnOnEndCanvas()
+    {
+        EndCanvas.SetActive(true);
+
+    }
+    public void TurnOffEndCanvas()
+    {
+        EndCanvas.SetActive(false);
+
     }
 
 

@@ -13,9 +13,17 @@ public class LineObj : MonoBehaviour
     public EdgeCollider2D EdgeCollider2D;
     public List<Vector3> LinePositions;
     public List<Vector3> localPoints = new List<Vector3>();
+    public float DrawSoundTimer;
+    public float DrawSoundCooldown;
     private GameObject Pen;
 
-
+    private void LateUpdate()
+    {
+        for (int i = 0; i < localPoints.Count; i++)
+        {
+            LineRenderer.SetPosition(i, transform.TransformPoint(localPoints[i]));
+        }
+    }
     private void Start()
     {
         LineRenderer = gameObject.GetComponent<LineRenderer>();
@@ -25,11 +33,14 @@ public class LineObj : MonoBehaviour
         LineRenderer.positionCount = 1;
         gameObject.GetComponent<Rigidbody2D>().simulated = false;
         Pen = DrawLineController.Instance.Pen;
+        Debug.Log(DrawSoundCooldown);
+
 
 
     }
     private void Update()
     {
+        DrawSoundTimer += Time.deltaTime;
         if (Input.GetMouseButton(0) && isComplete == false)
         {
             Pen.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
@@ -37,6 +48,7 @@ public class LineObj : MonoBehaviour
             _tempPosition.z = 0;
             if (Vector3.Distance(CurrentPosition, _tempPosition) > MinDistance)
             {
+
                 if (CurrentPosition == transform.position)
                 {
                     LineRenderer.SetPosition(0, _tempPosition);
@@ -44,10 +56,6 @@ public class LineObj : MonoBehaviour
                     LevelManager.Instance.DecreaseSlideStarValue();
                     AddPoint(_tempPosition);
                     Pen.transform.position = _tempPosition;
-
-
-
-
 
                 }
                 else
@@ -61,6 +69,12 @@ public class LineObj : MonoBehaviour
 
 
 
+
+                }
+                if (DrawSoundTimer >= DrawSoundCooldown)
+                {
+                    ObserverManager.Notify("PlayAudio", "DrawSound");
+                    DrawSoundTimer = 0f;
                 }
                 CurrentPosition = _tempPosition;
 
@@ -79,6 +93,7 @@ public class LineObj : MonoBehaviour
     }
     void AddPoint(Vector3 worldPos)
     {
+
         worldPos.z = 0;
 
         Vector3 localPos = transform.InverseTransformPoint(worldPos);
@@ -101,13 +116,12 @@ public class LineObj : MonoBehaviour
         circleCollider2D.radius = LineRenderer.startWidth / 2;
 
     }
-    private void LateUpdate()
+    public void PlayDrawSound()
     {
-        for (int i = 0; i < localPoints.Count; i++)
-        {
-            LineRenderer.SetPosition(i, transform.TransformPoint(localPoints[i]));
-        }
+
+
     }
+
 
 
 }

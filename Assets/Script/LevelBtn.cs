@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class LevelBtn : MonoBehaviour
     public Image Star1;
     public Image Star2;
     public Image Star3;
+    public bool isUnlock;
 
 
 
@@ -19,6 +21,8 @@ public class LevelBtn : MonoBehaviour
     void Start()
     {
         CheckLevelUnlock();
+        Data data = DataSystem.LoadData();
+        // Debug.Log(data.ListLevelPlayerPref.Find(x => x.Index == Level).Index);
         ObserverManager.AddListener("Level Complete", CheckLevelUnlock);
 
 
@@ -35,6 +39,9 @@ public class LevelBtn : MonoBehaviour
     public void LevelBtnNotify()
     {
         SceneController.Instance.ChangeToLevelScene(Level);
+        DrawLineController.Instance.isInLevel = true;
+        DrawLineController.Instance.isFirstLine = false;
+        ObserverManager.Notify("PlayAudio", "ButtonSound");
 
 
 
@@ -46,19 +53,46 @@ public class LevelBtn : MonoBehaviour
     }
     public void CheckLevelUnlock()
     {
-        if (LevelManager.Instance.LevelUnlock.ListLevelUnlock.Contains(Level) == false)
+        Data data = DataSystem.LoadData();
+        if (data.ListLevelPlayerPref.Find(x => x.Index == Level) == null && data.ListLevelPlayerPref.Find(x => x.Index == Level - 1) == null)
         {
             gameObject.GetComponent<Button>().interactable = false;
 
         }
-        else
+        else if (data.ListLevelPlayerPref.Find(x => x.Index == Level) != null || data.ListLevelPlayerPref.Find(x => x.Index == Level - 1) != null)
         {
-            gameObject.GetComponent<Button>().interactable = true;
-            Star = LevelManager.Instance.ListLevel.Find(x => x.Index == Level).Star;
-            UpdateStarAchievement();
+            if (LevelManager.Instance.ListLevel.Find(x => x.Index == Level) == null)
+            {
+                gameObject.GetComponent<Button>().interactable = false;
+
+            }
+            else
+            {
+                gameObject.GetComponent<Button>().interactable = true;
+                isUnlock = true;
+
+                if (data.ListLevelPlayerPref.Find(x => x.Index == Level) == null)
+                {
+                    Star = 0;
+                    UpdateStarAchievement();
+
+                }
+                else
+                {
+
+                    gameObject.GetComponent<Button>().interactable = true;
+                    Star = data.ListLevelPlayerPref.Find(x => x.Index == Level).Star;
+                    UpdateStarAchievement();
+                }
+
+            }
+
+
+
 
 
         }
+
     }
     public void UpdateStarAchievement()
     {

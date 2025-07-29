@@ -7,6 +7,4 @@ public class Level : ScriptableObject
 {
     public int Index;
     public GameObject Prefab;
-    public bool isComplete;
-    public int Star;
 }

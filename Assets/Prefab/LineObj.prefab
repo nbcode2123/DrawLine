@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 69447791913535862}
   m_Layer: 0
   m_Name: LineObj
-  m_TagString: Untagged
+  m_TagString: Line
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -180,11 +180,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LineRenderer: {fileID: 0}
   CurrentPosition: {x: 0, y: 0, z: 0}
-  MinDistance: 0.01
+  MinDistance: 0.1
   isComplete: 0
   EdgeCollider2D: {fileID: 0}
   LinePositions: []
   localPoints: []
+  DrawSoundTimer: 0
+  DrawSoundCooldown: 0.2
 --- !u!68 &69447791913535862
 EdgeCollider2D:
   m_ObjectHideFlags: 0
